@@ -12,6 +12,7 @@
     "ext",
     "pal",
     "syscalls",
-    "spi"
+    "spi",
+    "i2c"
   ]
 }
