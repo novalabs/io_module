@@ -53,11 +53,11 @@ RTCANConfig rtcan_config = {
 	1000000, 100, 60
 };
 
-#ifndef core_MODULE_NAME
-#define core_MODULE_NAME "IO"
+#ifndef CORE_MODULE_NAME
+#define CORE_MODULE_NAME "IO"
 #endif
 
-core::mw::Middleware core::mw::Middleware::instance(core_MODULE_NAME, "BOOT_" core_MODULE_NAME);
+core::mw::Middleware core::mw::Middleware::instance(CORE_MODULE_NAME, "BOOT_" CORE_MODULE_NAME);
 
 static EXTConfig extcfg = {   {
                                  {EXT_CH_MODE_DISABLED, NULL},

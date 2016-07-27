@@ -1,7 +1,7 @@
 #pragma once
 
 #include <core/mw/CoreModule.hpp>
-#include <modules/io/include/io/ModuleConfiguration.hpp>
+#include <ModuleConfiguration.hpp>
 
 namespace core {
 namespace hw {
