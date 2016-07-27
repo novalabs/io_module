@@ -12,6 +12,7 @@
 #include <core/hw/EXT.hpp>
 #include <core/hw/GPIO.hpp>
 #include <core/hw/SPI.hpp>
+#include <core/hw/I2C.hpp>
 #include <core/os/Thread.hpp>
 #include <Module.hpp>
 
@@ -31,6 +32,8 @@ static core::hw::Pad_<core::hw::GPIO_A, 6> _d7;
 using PAD_CS = core::hw::Pad_<core::hw::GPIO_B, 12>;
 static core::hw::SPIDevice_<core::hw::SPI_2, PAD_CS> _spi;
 
+static core::hw::I2CMaster_<core::hw::I2C_2> _i2c;
+
 static THD_WORKING_AREA(wa_info, 1024);
 static core::mw::RTCANTransport rtcantra(RTCAND1);
 
@@ -44,6 +47,7 @@ core::hw::Pad& Module::d6 = _d6;
 core::hw::Pad& Module::d7 = _d7;
 
 core::hw::SPIDevice& Module::spi = _spi;
+core::hw::I2CMaster& Module::i2c = _i2c;
 
 RTCANConfig rtcan_config = {
 	1000000, 100, 60

@@ -7,6 +7,7 @@ namespace core {
 namespace hw {
 class Pad;
 class SPIDevice;
+class I2CMaster;
 class EXTChannel;
 }
 }
@@ -28,6 +29,9 @@ public:
 	static core::hw::Pad& d7;
 
 	static core::hw::SPIDevice& spi;
+
+	static core::hw::I2CMaster& i2c;
+
 	//static core::hw::EXTChannel& ext;
 
 	Module();
