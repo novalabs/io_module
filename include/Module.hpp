@@ -1,3 +1,9 @@
+/* COPYRIGHT (c) 2016 Nova Labs SRL
+ *
+ * All rights reserved. All use of this software and documentation is
+ * subject to the License Agreement located in the file LICENSE.
+ */
+
 #pragma once
 
 #include <core/mw/CoreModule.hpp>
@@ -19,6 +25,7 @@ public:
 	static bool
 	initialize();
 
+// --- DEVICES ----------------------------------------------------------------
 	static core::hw::Pad& d0;
 	static core::hw::Pad& d1;
 	static core::hw::Pad& d2;
@@ -29,10 +36,8 @@ public:
 	static core::hw::Pad& d7;
 
 	static core::hw::SPIDevice& spi;
-
 	static core::hw::I2CMaster& i2c;
-
-	//static core::hw::EXTChannel& ext;
+// ----------------------------------------------------------------------------
 
 	Module();
 	virtual ~Module() {}
