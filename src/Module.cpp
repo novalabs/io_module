@@ -50,7 +50,7 @@ core::hw::SPIDevice& Module::spi = _spi;
 core::hw::I2CMaster& Module::i2c = _i2c;
 
 RTCANConfig rtcan_config = {
-	1000000, 100, 60
+   1000000, 100, 60
 };
 
 #ifndef CORE_MODULE_NAME
@@ -85,36 +85,36 @@ Module::initialize()
 {
 //	core_ASSERT(core::mw::Middleware::instance.is_stopped()); // TODO: capire perche non va...
 
-	static bool initialized = false;
+   static bool initialized = false;
 
-	if (!initialized) {
-		halInit();
-		chSysInit();
+   if (!initialized) {
+      halInit();
+      chSysInit();
 
-		core::mw::Middleware::instance.initialize(wa_info, sizeof(wa_info), core::os::Thread::LOWEST);
-		rtcantra.initialize(rtcan_config);
-		core::mw::Middleware::instance.start();
+      core::mw::Middleware::instance.initialize(wa_info, sizeof(wa_info), core::os::Thread::LOWEST);
+      rtcantra.initialize(rtcan_config);
+      core::mw::Middleware::instance.start();
 
-		extStart(&EXTD1, &extcfg);
+      extStart(&EXTD1, &extcfg);
 
 
-		initialized = true;
-	}
+      initialized = true;
+   }
 
-	return initialized;
+   return initialized;
 } // Board::initialize
 
 // Leftover from coreBoard (where LED_PAD cannot be defined
 void
 core::mw::CoreModule::Led::toggle()
 {
-	_led.toggle();
+   _led.toggle();
 }
 
 void
 core::mw::CoreModule::Led::write(
-		unsigned on
+   unsigned on
 )
 {
-	_led.write(on);
+   _led.write(on);
 }

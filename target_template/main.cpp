@@ -19,28 +19,28 @@ led::Subscriber led_subscriber("led_subscriber", Core::MW::Thread::PriorityEnum:
 
 // MAIN
 extern "C" {
-	int
-	main()
-	{
-		module.initialize();
+   int
+   main()
+   {
+      module.initialize();
 
-		// Led subscriber node
-		led_subscriber.configuration.topic = "led";
-		module.add(led_subscriber);
+      // Led subscriber node
+      led_subscriber.configuration.topic = "led";
+      module.add(led_subscriber);
 
-		// Setup and run
-		module.setup();
-		module.run();
+      // Setup and run
+      module.setup();
+      module.run();
 
-		// Is everything going well?
-		for (;;) {
-			if (!module.isOk()) {
-				module.halt("This must not happen!");
-			}
+      // Is everything going well?
+      for (;;) {
+         if (!module.isOk()) {
+            module.halt("This must not happen!");
+         }
 
-			Core::MW::Thread::sleep(Core::MW::Time::ms(500));
-		}
+         Core::MW::Thread::sleep(Core::MW::Time::ms(500));
+      }
 
-		return Core::MW::Thread::OK;
-	}
+      return Core::MW::Thread::OK;
+   } // main
 }

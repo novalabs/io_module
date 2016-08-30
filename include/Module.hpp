@@ -19,27 +19,27 @@ class EXTChannel;
 }
 
 class Module:
-	public core::mw::CoreModule
+   public core::mw::CoreModule
 {
 public:
-	static bool
-	initialize();
+   static bool
+   initialize();
+
 
 // --- DEVICES ----------------------------------------------------------------
-	static core::hw::Pad& d0;
-	static core::hw::Pad& d1;
-	static core::hw::Pad& d2;
-	static core::hw::Pad& d3;
-	static core::hw::Pad& d4;
-	static core::hw::Pad& d5;
-	static core::hw::Pad& d6;
-	static core::hw::Pad& d7;
+   static core::hw::Pad& d0;
+   static core::hw::Pad& d1;
+   static core::hw::Pad& d2;
+   static core::hw::Pad& d3;
+   static core::hw::Pad& d4;
+   static core::hw::Pad& d5;
+   static core::hw::Pad& d6;
+   static core::hw::Pad& d7;
 
-	static core::hw::SPIDevice& spi;
-	static core::hw::I2CMaster& i2c;
+   static core::hw::SPIDevice& spi;
+   static core::hw::I2CMaster& i2c;
 // ----------------------------------------------------------------------------
 
-	Module();
-	virtual ~Module() {}
+   Module();
+   virtual ~Module() {}
 };
-
