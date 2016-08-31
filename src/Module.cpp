@@ -34,8 +34,8 @@ static core::hw::SPIDevice_<core::hw::SPI_2, PAD_CS> _spi;
 
 static core::hw::I2CMaster_<core::hw::I2C_2> _i2c;
 
-static THD_WORKING_AREA(wa_info, 1024);
-static core::mw::RTCANTransport rtcantra(RTCAND1);
+static core::os::Thread::Stack<1024> management_thread_stack;
+static core::mw::RTCANTransport      rtcantra(RTCAND1);
 
 core::hw::Pad& Module::d0 = _d0;
 core::hw::Pad& Module::d1 = _d1;
@@ -91,7 +91,7 @@ Module::initialize()
       halInit();
       chSysInit();
 
-      core::mw::Middleware::instance.initialize(wa_info, sizeof(wa_info), core::os::Thread::LOWEST);
+      core::mw::Middleware::instance.initialize(management_thread_stack, management_thread_stack.size(), core::os::Thread::LOWEST);
       rtcantra.initialize(rtcan_config);
       core::mw::Middleware::instance.start();
 
