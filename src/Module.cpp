@@ -36,7 +36,7 @@ static core::hw::SPIDevice_<core::hw::SPI_2, PAD_CS> _spi;
 static core::hw::I2CMaster_<core::hw::I2C_2> _i2c;
 
 static core::os::Thread::Stack<1024> management_thread_stack;
-static core::mw::RTCANTransport      rtcantra(RTCAND1);
+static core::mw::RTCANTransport      rtcantra(&RTCAND1);
 
 core::hw::Pad& Module::d0 = _d0;
 core::hw::Pad& Module::d1 = _d1;
