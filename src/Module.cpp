@@ -1,4 +1,4 @@
-/* COPYRIGHT (c) 2016 Nova Labs SRL
+/* COPYRIGHT (c) 2016-2017 Nova Labs SRL
  *
  * All rights reserved. All use of this software and documentation is
  * subject to the License Agreement located in the file LICENSE.
@@ -14,6 +14,7 @@
 #include <core/hw/GPIO.hpp>
 #include <core/hw/SPI.hpp>
 #include <core/hw/I2C.hpp>
+#include <core/hw/SD.hpp>
 #include <core/os/Thread.hpp>
 #include <Module.hpp>
 
@@ -35,6 +36,14 @@ static core::hw::SPIDevice_<core::hw::SPI_2, PAD_CS> _spi;
 
 static core::hw::I2CMaster_<core::hw::I2C_2> _i2c;
 
+using SD_1_STREAM  = core::os::SDChannelTraits<core::hw::SD_1>;
+using SERIAL1 = core::os::IOChannel_<SD_1_STREAM, core::os::IOChannel::DefaultTimeout::INFINITE>;
+static SERIAL1 _serial1;
+
+using SD_3_STREAM  = core::os::SDChannelTraits<core::hw::SD_3>;
+using SERIAL3 = core::os::IOChannel_<SD_3_STREAM, core::os::IOChannel::DefaultTimeout::INFINITE>;
+static SERIAL3 _serial3;
+
 static core::os::Thread::Stack<1024> management_thread_stack;
 static core::mw::RTCANTransport      rtcantra(&RTCAND1);
 
@@ -49,6 +58,9 @@ core::hw::Pad& Module::d7 = _d7;
 
 core::hw::SPIDevice& Module::spi = _spi;
 core::hw::I2CMaster& Module::i2c = _i2c;
+
+core::os::IOChannel& Module::u1 = _serial1;
+core::os::IOChannel& Module::u2 = _serial3;
 
 RTCANConfig rtcan_config = {
    1000000, 100, 60
@@ -98,6 +110,7 @@ Module::initialize()
 
       extStart(&EXTD1, &extcfg);
 
+//      sdStart(core::hw::SD_3::driver, nullptr);
 
       initialized = true;
    }
@@ -105,17 +118,40 @@ Module::initialize()
    return initialized;
 } // Board::initialize
 
-// Leftover from coreBoard (where LED_PAD cannot be defined
+// ----------------------------------------------------------------------------
+// CoreModule HW specific implementation
+// ----------------------------------------------------------------------------
+
 void
 core::mw::CoreModule::Led::toggle()
 {
-   _led.toggle();
+    _led.toggle();
 }
 
 void
 core::mw::CoreModule::Led::write(
-   unsigned on
+    unsigned on
 )
 {
-   _led.write(on);
+    _led.write(on);
+}
+
+void
+core::mw::CoreModule::reset()
+{
+}
+
+void
+core::mw::CoreModule::keepAlive()
+{
+}
+
+void
+core::mw::CoreModule::disableBootloader()
+{
+}
+
+void
+core::mw::CoreModule::enableBootloader()
+{
 }
