@@ -1,7 +1,7 @@
 {
   "name": "io",
   "description": "IO module",
-  "chip": "STM32F303CB",
+  "chip": "STM32F303CC",
   "required_packages": [
     "led",
     "common_msgs"
@@ -13,6 +13,10 @@
     "pal",
     "syscalls",
     "spi",
-    "i2c"
+    "i2c",
+    "serial",
+    "chprintf",
+    "adc",
+    "gpt"
   ]
 }
