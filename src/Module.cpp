@@ -15,6 +15,7 @@
 #include <core/hw/SPI.hpp>
 #include <core/hw/I2C.hpp>
 #include <core/hw/SD.hpp>
+#include <core/hw/IWDG.hpp>
 #include <core/os/Thread.hpp>
 #include <Module.hpp>
 
@@ -36,12 +37,12 @@ static core::hw::SPIDevice_<core::hw::SPI_2, PAD_CS> _spi;
 
 static core::hw::I2CMaster_<core::hw::I2C_2> _i2c;
 
-using SD_1_STREAM  = core::os::SDChannelTraits<core::hw::SD_1>;
-using SERIAL1 = core::os::IOChannel_<SD_1_STREAM, core::os::IOChannel::DefaultTimeout::INFINITE>;
+using SD_1_STREAM = core::os::SDChannelTraits<core::hw::SD_1>;
+using SERIAL1     = core::os::IOChannel_<SD_1_STREAM, core::os::IOChannel::DefaultTimeout::INFINITE>;
 static SERIAL1 _serial1;
 
-using SD_3_STREAM  = core::os::SDChannelTraits<core::hw::SD_3>;
-using SERIAL3 = core::os::IOChannel_<SD_3_STREAM, core::os::IOChannel::DefaultTimeout::INFINITE>;
+using SD_3_STREAM = core::os::SDChannelTraits<core::hw::SD_3>;
+using SERIAL3     = core::os::IOChannel_<SD_3_STREAM, core::os::IOChannel::DefaultTimeout::INFINITE>;
 static SERIAL3 _serial3;
 
 static core::os::Thread::Stack<1024> management_thread_stack;
@@ -63,32 +64,38 @@ core::os::IOChannel& Module::u1 = _serial1;
 core::os::IOChannel& Module::u2 = _serial3;
 
 RTCANConfig rtcan_config = {
-   1000000, 100, 60
+    1000000, 100, 60
 };
 
-#ifndef CORE_MODULE_NAME
-#define CORE_MODULE_NAME "IO"
-#endif
+// ----------------------------------------------------------------------------
+// CoreModule STM32FlashConfigurationStorage
+// ----------------------------------------------------------------------------
+#include <core/snippets/CoreModuleSTM32FlashConfigurationStorage.hpp>
+// ----------------------------------------------------------------------------
 
-core::mw::Middleware core::mw::Middleware::instance(CORE_MODULE_NAME, "BOOT_" CORE_MODULE_NAME);
+core::mw::Middleware
+core::mw::Middleware::instance(
+    ModuleConfiguration::MODULE_NAME
+);
 
-static EXTConfig extcfg = {   {
-                                 {EXT_CH_MODE_DISABLED, NULL},
-                                 {EXT_CH_MODE_DISABLED, NULL},
-                                 {EXT_CH_MODE_DISABLED, NULL},
-                                 {EXT_CH_MODE_DISABLED, NULL},
-                                 {EXT_CH_MODE_DISABLED, NULL},
-                                 {EXT_CH_MODE_DISABLED, NULL},
-                                 {EXT_CH_MODE_DISABLED, NULL},
-                                 {EXT_CH_MODE_DISABLED, NULL},
-                                 {EXT_CH_MODE_DISABLED, NULL},
-                                 {EXT_CH_MODE_DISABLED, NULL},
-                                 {EXT_CH_MODE_DISABLED, NULL},
-                                 {EXT_CH_MODE_DISABLED, NULL},
-                                 {EXT_CH_MODE_DISABLED, NULL},
-                                 {EXT_CH_MODE_DISABLED, NULL},
-                                 {EXT_CH_MODE_DISABLED, NULL}
-                              }};
+
+static EXTConfig extcfg = {    {
+                                   {EXT_CH_MODE_DISABLED, NULL},
+                                   {EXT_CH_MODE_DISABLED, NULL},
+                                   {EXT_CH_MODE_DISABLED, NULL},
+                                   {EXT_CH_MODE_DISABLED, NULL},
+                                   {EXT_CH_MODE_DISABLED, NULL},
+                                   {EXT_CH_MODE_DISABLED, NULL},
+                                   {EXT_CH_MODE_DISABLED, NULL},
+                                   {EXT_CH_MODE_DISABLED, NULL},
+                                   {EXT_CH_MODE_DISABLED, NULL},
+                                   {EXT_CH_MODE_DISABLED, NULL},
+                                   {EXT_CH_MODE_DISABLED, NULL},
+                                   {EXT_CH_MODE_DISABLED, NULL},
+                                   {EXT_CH_MODE_DISABLED, NULL},
+                                   {EXT_CH_MODE_DISABLED, NULL},
+                                   {EXT_CH_MODE_DISABLED, NULL}
+                               }};
 
 Module::Module()
 {}
@@ -96,62 +103,26 @@ Module::Module()
 bool
 Module::initialize()
 {
-//	core_ASSERT(core::mw::Middleware::instance.is_stopped()); // TODO: capire perche non va...
+    static bool initialized = false;
 
-   static bool initialized = false;
+    if (!initialized) {
+        halInit();
+        chSysInit();
 
-   if (!initialized) {
-      halInit();
-      chSysInit();
+        core::mw::Middleware::instance.initialize(name(), management_thread_stack, management_thread_stack.size(), core::os::Thread::LOWEST);
+        rtcantra.initialize(rtcan_config, canID());
+        core::mw::Middleware::instance.start();
 
-      core::mw::Middleware::instance.initialize(management_thread_stack, management_thread_stack.size(), core::os::Thread::LOWEST);
-      rtcantra.initialize(rtcan_config);
-      core::mw::Middleware::instance.start();
+        extStart(&EXTD1, &extcfg);
 
-      extStart(&EXTD1, &extcfg);
+        initialized = true;
+    }
 
-//      sdStart(core::hw::SD_3::driver, nullptr);
-
-      initialized = true;
-   }
-
-   return initialized;
+    return initialized;
 } // Board::initialize
 
 // ----------------------------------------------------------------------------
 // CoreModule HW specific implementation
 // ----------------------------------------------------------------------------
-
-void
-core::mw::CoreModule::Led::toggle()
-{
-    _led.toggle();
-}
-
-void
-core::mw::CoreModule::Led::write(
-    unsigned on
-)
-{
-    _led.write(on);
-}
-
-void
-core::mw::CoreModule::reset()
-{
-}
-
-void
-core::mw::CoreModule::keepAlive()
-{
-}
-
-void
-core::mw::CoreModule::disableBootloader()
-{
-}
-
-void
-core::mw::CoreModule::enableBootloader()
-{
-}
+#include <core/snippets/CoreModuleHWSpecificImplementation.hpp>
+// ----------------------------------------------------------------------------
