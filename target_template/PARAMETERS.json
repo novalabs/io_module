@@ -1,0 +1,11 @@
+  {
+  "name": "@@NAME@@",
+  "description": "IO module template configuration",
+  "objects": [
+    {
+      "object": "led_subscriber",
+      "package": "led",
+      "parameters": "SubscriberConfiguration"
+    }
+  ]
+}
