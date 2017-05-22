@@ -16,17 +16,9 @@ namespace hw {
 class Pad;
 class SPIDevice;
 class I2CMaster;
-class EXTChannel;
+class EXTController;
 }
 }
-
-#if CORE_USE_CONFIGURATION_STORAGE
-namespace core {
-namespace mw {
-class CoreConfigurationStorage;
-}
-}
-#endif
 
 class Module:
     public core::mw::CoreModule
@@ -42,6 +34,8 @@ public:
     static core::hw::Pad& d6;
     static core::hw::Pad& d7;
 
+    static core::hw::EXTController& ext;
+
     static core::hw::SPIDevice& spi;
     static core::hw::I2CMaster& i2c;
 
@@ -53,9 +47,6 @@ public:
     initialize();
 
 
-#if CORE_USE_CONFIGURATION_STORAGE
-    static core::mw::CoreConfigurationStorage& configurationStorage;
-#endif
     Module();
     virtual ~Module() {}
 };
