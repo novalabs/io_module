@@ -20,7 +20,7 @@
 #include <Module.hpp>
 
 // LED
-using LED_PAD = core::hw::Pad_<core::hw::GPIO_F, GPIOF_LED>;
+using LED_PAD = core::hw::Pad_<core::hw::GPIO_F, LED_PIN>;
 static LED_PAD _led;
 
 // DIGITAL I/O
@@ -63,10 +63,10 @@ core::hw::Pad& Module::d5 = _d5;
 core::hw::Pad& Module::d6 = _d6;
 core::hw::Pad& Module::d7 = _d7;
 core::hw::EXTController& Module::ext = _ext;
-core::hw::SPIDevice& Module::spi = _spi;
-core::hw::I2CMaster& Module::i2c = _i2c;
-core::os::IOChannel& Module::u1 = _serial1;
-core::os::IOChannel& Module::u2 = _serial3;
+core::hw::SPIDevice&     Module::spi = _spi;
+core::hw::I2CMaster&     Module::i2c = _i2c;
+core::os::IOChannel&     Module::u1  = _serial1;
+core::os::IOChannel&     Module::u2  = _serial3;
 
 
 // SYSTEM STUFF
