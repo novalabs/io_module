@@ -60,8 +60,8 @@
 #define GPIOA_AIN0                  6U
 #define GPIOA_AIN1                  7U
 #define GPIOA_PIN8                  8U
-#define GPIOA_PIN9                  9U
-#define GPIOA_PIN10                 10U
+#define GPIOA_I2C2_SCL              9U
+#define GPIOA_I2C2_SDA              10U
 #define GPIOA_PIN11                 11U
 #define GPIOA_PIN12                 12U
 #define GPIOA_SWDIO                 13U
@@ -209,8 +209,8 @@
  * PA6  - AIN0                      (analog).
  * PA7  - AIN1                      (analog).
  * PA8  - PIN8                      (input pullup).
- * PA9  - PIN9                      (input pullup).
- * PA10 - PIN10                     (input pullup).
+ * PA9  - I2C2_SCL                  (alternate 4).
+ * PA10 - I2C2_SDA                  (alternate 4).
  * PA11 - PIN11                     (input pullup).
  * PA12 - PIN12                     (input pullup).
  * PA13 - SWDIO                     (alternate 0).
@@ -223,11 +223,11 @@
                                      PIN_MODE_INPUT(GPIOA_PIN3) |           \
                                      PIN_MODE_INPUT(GPIOA_PIN4) |           \
                                      PIN_MODE_INPUT(GPIOA_PIN5) |           \
-                                     PIN_MODE_ANALOG(GPIOA_AIN0) |           \
-                                     PIN_MODE_ANALOG(GPIOA_AIN1) |           \
+                                     PIN_MODE_ANALOG(GPIOA_AIN0) |          \
+                                     PIN_MODE_ANALOG(GPIOA_AIN1) |          \
                                      PIN_MODE_INPUT(GPIOA_PIN8) |           \
-                                     PIN_MODE_INPUT(GPIOA_PIN9) |           \
-                                     PIN_MODE_INPUT(GPIOA_PIN10) |          \
+                                     PIN_MODE_ALTERNATE(GPIOA_I2C2_SCL) |   \
+                                     PIN_MODE_ALTERNATE(GPIOA_I2C2_SDA) |   \
                                      PIN_MODE_INPUT(GPIOA_PIN11) |          \
                                      PIN_MODE_INPUT(GPIOA_PIN12) |          \
                                      PIN_MODE_ALTERNATE(GPIOA_SWDIO) |      \
@@ -242,8 +242,8 @@
                                      PIN_OTYPE_PUSHPULL(GPIOA_AIN0) |       \
                                      PIN_OTYPE_PUSHPULL(GPIOA_AIN1) |       \
                                      PIN_OTYPE_PUSHPULL(GPIOA_PIN8) |       \
-                                     PIN_OTYPE_PUSHPULL(GPIOA_PIN9) |       \
-                                     PIN_OTYPE_PUSHPULL(GPIOA_PIN10) |      \
+                                     PIN_OTYPE_OPENDRAIN(GPIOA_I2C2_SCL) |  \
+                                     PIN_OTYPE_OPENDRAIN(GPIOA_I2C2_SDA) |  \
                                      PIN_OTYPE_PUSHPULL(GPIOA_PIN11) |      \
                                      PIN_OTYPE_PUSHPULL(GPIOA_PIN12) |      \
                                      PIN_OTYPE_PUSHPULL(GPIOA_SWDIO) |      \
@@ -258,8 +258,8 @@
                                      PIN_OSPEED_VERYLOW(GPIOA_AIN0) |       \
                                      PIN_OSPEED_VERYLOW(GPIOA_AIN1) |       \
                                      PIN_OSPEED_VERYLOW(GPIOA_PIN8) |       \
-                                     PIN_OSPEED_VERYLOW(GPIOA_PIN9) |       \
-                                     PIN_OSPEED_VERYLOW(GPIOA_PIN10) |      \
+                                     PIN_OSPEED_HIGH(GPIOA_I2C2_SCL) |      \
+                                     PIN_OSPEED_HIGH(GPIOA_I2C2_SDA) |      \
                                      PIN_OSPEED_VERYLOW(GPIOA_PIN11) |      \
                                      PIN_OSPEED_VERYLOW(GPIOA_PIN12) |      \
                                      PIN_OSPEED_HIGH(GPIOA_SWDIO) |         \
@@ -274,8 +274,8 @@
                                      PIN_PUPDR_PULLUP(GPIOA_AIN0) |         \
                                      PIN_PUPDR_PULLUP(GPIOA_AIN1) |         \
                                      PIN_PUPDR_PULLUP(GPIOA_PIN8) |         \
-                                     PIN_PUPDR_PULLUP(GPIOA_PIN9) |         \
-                                     PIN_PUPDR_PULLUP(GPIOA_PIN10) |        \
+                                     PIN_PUPDR_PULLUP(GPIOA_I2C2_SCL) |     \
+                                     PIN_PUPDR_PULLUP(GPIOA_I2C2_SDA) |     \
                                      PIN_PUPDR_PULLUP(GPIOA_PIN11) |        \
                                      PIN_PUPDR_PULLUP(GPIOA_PIN12) |        \
                                      PIN_PUPDR_PULLUP(GPIOA_SWDIO) |        \
@@ -290,8 +290,8 @@
                                      PIN_ODR_HIGH(GPIOA_AIN0) |             \
                                      PIN_ODR_HIGH(GPIOA_AIN1) |             \
                                      PIN_ODR_HIGH(GPIOA_PIN8) |             \
-                                     PIN_ODR_HIGH(GPIOA_PIN9) |             \
-                                     PIN_ODR_HIGH(GPIOA_PIN10) |            \
+                                     PIN_ODR_HIGH(GPIOA_I2C2_SCL) |         \
+                                     PIN_ODR_HIGH(GPIOA_I2C2_SDA) |         \
                                      PIN_ODR_HIGH(GPIOA_PIN11) |            \
                                      PIN_ODR_HIGH(GPIOA_PIN12) |            \
                                      PIN_ODR_HIGH(GPIOA_SWDIO) |            \
@@ -306,8 +306,8 @@
                                      PIN_AFIO_AF(GPIOA_AIN0, 0) |           \
                                      PIN_AFIO_AF(GPIOA_AIN1, 0))
 #define VAL_GPIOA_AFRH              (PIN_AFIO_AF(GPIOA_PIN8, 0) |           \
-                                     PIN_AFIO_AF(GPIOA_PIN9, 0) |           \
-                                     PIN_AFIO_AF(GPIOA_PIN10, 0) |          \
+                                     PIN_AFIO_AF(GPIOA_I2C2_SCL, 4) |       \
+                                     PIN_AFIO_AF(GPIOA_I2C2_SDA, 4) |       \
                                      PIN_AFIO_AF(GPIOA_PIN11, 0) |          \
                                      PIN_AFIO_AF(GPIOA_PIN12, 0) |          \
                                      PIN_AFIO_AF(GPIOA_SWDIO, 0) |          \
