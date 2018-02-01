@@ -1,6 +1,6 @@
 {
   "name": "io",
-  "description": "IO module",
+  "description": "Nova Core IO module",
   "chip": "STM32F303CC",
   "required_packages": [
     "stm32_flash",
