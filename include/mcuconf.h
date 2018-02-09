@@ -61,8 +61,8 @@
 #define STM32_USART3SW                      STM32_USART3SW_PCLK
 #define STM32_UART4SW                       STM32_UART4SW_PCLK
 #define STM32_UART5SW                       STM32_UART5SW_PCLK
-#define STM32_I2C1SW                        STM32_I2C1SW_SYSCLK
-#define STM32_I2C2SW                        STM32_I2C2SW_SYSCLK
+#define STM32_I2C1SW                        STM32_I2C1SW_HSI
+#define STM32_I2C2SW                        STM32_I2C2SW_HSI
 #define STM32_TIM1SW                        STM32_TIM1SW_PCLK2
 #define STM32_TIM8SW                        STM32_TIM8SW_PCLK2
 #define STM32_RTCSEL                        STM32_RTCSEL_NOCLOCK
@@ -150,7 +150,9 @@
 #define STM32_I2C_BUSY_TIMEOUT              50
 #define STM32_I2C_I2C1_IRQ_PRIORITY         10
 #define STM32_I2C_I2C2_IRQ_PRIORITY         10
-#define STM32_I2C_USE_DMA                   TRUE
+#define STM32_I2C_USE_DMA                   FALSE
+#define STM32_I2C_I2C2_RX_DMA_STREAM        STM32_DMA_STREAM_ID(1, 5)
+#define STM32_I2C_I2C2_TX_DMA_STREAM        STM32_DMA_STREAM_ID(1, 4)
 #define STM32_I2C_I2C1_DMA_PRIORITY         1
 #define STM32_I2C_I2C2_DMA_PRIORITY         1
 #define STM32_I2C_DMA_ERROR_HOOK(i2cp)      osalSysHalt("DMA failure")
@@ -204,6 +206,8 @@
 #define STM32_SPI_USE_SPI1                  FALSE
 #define STM32_SPI_USE_SPI2                  TRUE
 #define STM32_SPI_USE_SPI3                  FALSE
+#define STM32_SPI_SPI2_RX_DMA_STREAM        STM32_DMA_STREAM_ID(1, 4)
+#define STM32_SPI_SPI2_TX_DMA_STREAM        STM32_DMA_STREAM_ID(1, 5)
 #define STM32_SPI_SPI1_DMA_PRIORITY         1
 #define STM32_SPI_SPI2_DMA_PRIORITY         1
 #define STM32_SPI_SPI3_DMA_PRIORITY         1
