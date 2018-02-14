@@ -280,8 +280,8 @@
                                      PIN_PUPDR_PULLUP(GPIOA_AIN0) |         \
                                      PIN_PUPDR_PULLUP(GPIOA_AIN1) |         \
                                      PIN_PUPDR_PULLUP(GPIOA_PIN8) |         \
-                                     PIN_PUPDR_PULLUP(GPIOA_I2C2_SCL) |     \
-                                     PIN_PUPDR_PULLUP(GPIOA_I2C2_SDA) |     \
+                                     PIN_PUPDR_FLOATING(GPIOA_I2C2_SCL) |     \
+                                     PIN_PUPDR_FLOATING(GPIOA_I2C2_SDA) |     \
                                      PIN_PUPDR_PULLUP(GPIOA_PIN11) |        \
                                      PIN_PUPDR_PULLUP(GPIOA_PIN12) |        \
                                      PIN_PUPDR_PULLUP(GPIOA_SWDIO) |        \
